@@ -2,35 +2,39 @@ import React from 'react';
 import { connect } from 'react-redux';
 import RctElement from './RctElement';
 
-class HTMLDisplay extends React.Component {
-  constructor() {
-    super();
-    this.state = {};
-
-    this.findElement = this.findElement.bind(this);
-    this.parser = new DOMParser();
-  }
-
-  findElement(ev) {
-    console.log(this.parser.parseFromString(ev.target.innerHTML, 'text/html'));
-  }
-
-  render() {
+export const HTMLDisplay = ({ html, fetching, noneReceived }) => {
+  if (fetching) {
     return (
-      <div
-        style={{background: '#f2f2f2'}}
-        onClick={this.findElement}
-      >
-        {this.props.html ? <RctElement htmlProp={this.props.html} /> : null}
+      <div>
+        <h3>Fetching the HTML</h3>
       </div>
     );
   }
-}
+
+  if (noneReceived) {
+    return (
+      <div>
+        <h3>Invalid URL</h3>
+      </div>
+    );
+  }
+  return (
+    <div id="code-display">
+      {
+        html ?
+        <RctElement htmlProp={html} /> :
+        null
+      }
+    </div>
+  );
+};
 
 const parser = new DOMParser();
 
 const mapStateToProps = state => ({
-  html: parser.parseFromString(state.html, 'text/html')
+  html: parser.parseFromString(state.html, 'text/html'),
+  fetching: state.fetching,
+  noneReceived: state.noneReceived
 });
 
 export default connect(mapStateToProps)(HTMLDisplay);

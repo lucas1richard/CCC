@@ -2,11 +2,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { cURL } from '../redux/reducers';
 
-class URLSearch extends React.Component {
+export class URLSearch extends React.Component {
   constructor() {
     super();
     this.state = {
-      url: ''
+      url: 'cognizant.com'
     };
 
     this.changeUrl = this.changeUrl.bind(this);
@@ -25,13 +25,20 @@ class URLSearch extends React.Component {
   render() {
     return (
       <form onSubmit={this.submitForm}>
-        <input
-          type="text"
-          className="form-control"
-          placeholder="Public URL"
-          value={this.state.url}
-          onChange={this.changeUrl}
-        />
+        <div className="input-group">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Public URL"
+            value={this.state.url}
+            onChange={this.changeUrl}
+          />
+          <span className="input-group-btn">
+            <button className="btn btn-primary">
+              Get HTML
+            </button>
+          </span>
+        </div>
       </form>
     );
   }

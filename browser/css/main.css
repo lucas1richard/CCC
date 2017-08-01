@@ -1,0 +1,41 @@
+.mleft {
+  margin-left: 15px;
+}
+
+.highlight {
+  background-color: rgba(255, 255, 75, 0.9);
+}
+
+#code-display {
+  background: rgba(202, 222, 219, 0.3);
+  border:  2px solid #dedede;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  border-radius: 4px;
+  word-wrap: break-word;
+}
+
+#main-container {
+  background-color: #fff;
+  border-left: 4px solid #dedede;
+  border-right: 4px solid #dedede;
+  min-height: 100%;
+}
+
+body {
+   background: rgba(242, 242, 242, 0.5); 
+  background: url(http://www.cognizant.com/content/dam/cognizant_foundation/Dotcomimage/lillypad-mesh.svg) no-repeat;
+}
+
+.author {
+  color: #298eb0;
+  font-weight: bold;
+}
+
+.page-title {
+  color: #3f8e1f;
+}
+
+.project-rules {
+  color: #308e7b
+}

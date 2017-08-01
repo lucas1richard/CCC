@@ -1,70 +1,85 @@
-// Karma configuration
-// Generated on Mon Jul 31 2017 20:51:10 GMT-0400 (EDT)
+// var webpackConfig = require('./webpack.config.js');
+
+// module.exports = function(config) {
+//   config.set({
+
+//     // Add any browsers here
+//     browsers: ['Chrome'],
+//     frameworks: ['mocha'],
+
+//     // The entry point for our test suite
+//     basePath: __dirname,
+//     autoWatch: false,
+//     files: ['webpack.tests.js'],
+//     preprocessors: {
+//       // Run this through webpack, and enable inline sourcemaps
+//       'webpack.tests.js': ['webpack', 'sourcemap'],
+//     },
+
+//     webpack: webpackConfig.test,
+//     client: {
+//       // log console output in our test console
+//       captureConsole: true
+//     },
+
+//     reporters: ['dots'],
+//     singleRun: false, // exit after tests have completed
+
+//     webpackMiddleware: {
+//       noInfo: true
+//     },
+
+//     // Webpack takes a little while to compile -- this manifests as a really
+//     // long load time while webpack blocks on serving the request.
+//     browserNoActivityTimeout: 60000, // 60 seconds
+
+//   });
+// };
+
+var webpack = require('webpack');
 
 module.exports = function(config) {
   config.set({
-
-    // base path that will be used to resolve all patterns (eg. files, exclude)
     basePath: __dirname,
-
-
-    // frameworks to use
-    // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['mocha', 'requirejs', 'chai'],
-
-
-    // list of files / patterns to load in the browser
+    frameworks: ['mocha', /* 'requirejs', */ 'chai'],
     files: [
-      'dist/bundle.js',
-      'test/index.spec.js',
+      // 'dist/bundle.js',
+      // 'browser/react/index.js',
+      'webpack.tests.js',
     ],
-
-
-    // list of files to exclude
     exclude: [
     ],
-
-
-    // preprocess matching files before serving them to the browser
-    // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
+      'webpack.tests.js': ['webpack']
+      // 'browser/react/index.js': ['webpack', 'sourcemap']
+    },
+    reporters: ['progress', 'dots'],
+    port: 9876,
+    colors: true,
+    logLevel: config.LOG_INFO,
+    autoWatch: true,
+    browsers: ['Chrome'],
+    singleRun: false,
+    concurrency: Infinity,
+
+    webpack: {
+      devtool: 'inline-source-map',
+      module: {
+        loaders: [
+          { test: /\.js$/, loader: 'babel-loader'}
+        ]
+      }
     },
 
+    webpackServer: {
+      noInfo: true
+    },
 
-    // test results reporter to use
-    // possible values: 'dots', 'progress'
-    // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['progress'],
-
-
-    // web server port
-    port: 9876,
-
-
-    // enable / disable colors in the output (reporters and logs)
-    colors: true,
-
-
-    // level of logging
-    // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
-    logLevel: config.LOG_INFO,
-
-
-    // enable / disable watching file and executing tests whenever any file changes
-    autoWatch: true,
-
-
-    // start these browsers
-    // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['Chrome'],
-
-
-    // Continuous Integration mode
-    // if true, Karma captures browsers, runs the tests and exits
-    singleRun: false,
-
-    // Concurrency level
-    // how many browser should be started simultaneous
-    concurrency: Infinity
-  })
-}
+    plugins: [
+      require('karma-webpack'),
+      require('karma-mocha'),
+      require('karma-chai'),
+      require('karma-chrome-launcher'),
+    ]
+  });
+};
