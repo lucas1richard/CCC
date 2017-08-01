@@ -31,4 +31,7 @@ const app = (
   </Provider>
 );
 
-ReactDOM.render(app, document.getElementById('app'));
+const appDiv = document.createElement('div');
+document.body.appendChild(appDiv);
+
+ReactDOM.render(app, appDiv);
