@@ -24741,7 +24741,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.updateTag = exports.cURL = undefined;
+	exports.resetState = exports.updateTag = exports.cURL = exports.initialState = undefined;
 
 	var _axios = __webpack_require__(227);
 
@@ -24751,8 +24751,7 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var initialState = {
-	  // currentUrl: 'cognizant.com',
+	var initialState = exports.initialState = {
 	  tag: '',
 	  fetching: false,
 	  noneReceived: false
@@ -24779,6 +24778,10 @@
 	      state = Object.assign({}, state, { fetching: true });
 	      break;
 
+	    case _constants.RESET_STATE:
+	      state = Object.assign({}, initialState);
+	      break;
+
 	    default:
 	      break;
 	  }
@@ -24796,7 +24799,7 @@
 	var cURL = exports.cURL = function cURL(url) {
 	  return function (dispatch) {
 	    dispatch({ type: _constants.FETCHING_HTML });
-	    _axios2.default.post('/api/curl', { url: url }).then(function (_ref) {
+	    _axios2.default.post('http://localhost:3000/api/curl', { url: url }).then(function (_ref) {
 	      var data = _ref.data;
 	      return dispatch({ type: _constants.RECEIVE_HTML, payload: data });
 	    }).catch(function () {
@@ -24812,6 +24815,12 @@
 	var updateTag = exports.updateTag = function updateTag(tag) {
 	  return function (dispatch) {
 	    dispatch({ type: _constants.UPDATE_TAG, payload: tag });
+	  };
+	};
+
+	var resetState = exports.resetState = function resetState() {
+	  return function (dispatch) {
+	    return dispatch({ type: _constants.RESET_STATE });
 	  };
 	};
 
@@ -26357,6 +26366,7 @@
 	var UPDATE_TAG = exports.UPDATE_TAG = 'UPDATE_TAG';
 	var FETCHING_HTML = exports.FETCHING_HTML = 'FETCHING_HTML';
 	var NO_HTML_RETURNED = exports.NO_HTML_RETURNED = 'NO_HTML_RETURNED';
+	var RESET_STATE = exports.RESET_STATE = 'RESET_STATE';
 
 /***/ },
 /* 254 */

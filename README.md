@@ -9,8 +9,9 @@ npm install && npm run start:dev
 
 To test:
 ```bash
-npm test
+npm run start:dev && npm test
 ```
+Make sure the application is running on localhost:3000
 
 -----
 ## Notes ##
@@ -21,7 +22,7 @@ The HTML elements are passed to a component called `RctElement`, which displays 
 children into further instances of `RctElement` for display.
 
 When an `RctElement` is clicked, the application state updates `tag` to be that element `nodeName`. All RctElements receive
-this tag as a property, and as such are re-rendered it changes. If the element `nodeName` matches the `tag`, the style is
+this tag as a property, and as such are re-rendered with the changes. If the element `nodeName` matches the `tag`, the style is
 updated to highlight the element.
 
 This results in the "raw" HTML string displayed in a consistent format, which may not be identical to the source code format,

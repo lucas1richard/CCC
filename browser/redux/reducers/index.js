@@ -3,11 +3,11 @@ import {
   RECEIVE_HTML,
   UPDATE_TAG,
   FETCHING_HTML,
-  NO_HTML_RETURNED
+  NO_HTML_RETURNED,
+  RESET_STATE
 } from '../constants';
 
-const initialState = {
-  // currentUrl: 'cognizant.com',
+export const initialState = {
   tag: '',
   fetching: false,
   noneReceived: false
@@ -31,6 +31,10 @@ export default (state = initialState, action) => {
       state = Object.assign({}, state, {fetching: true});
       break;
 
+    case RESET_STATE:
+      state = Object.assign({}, initialState);
+      break;
+
     default:
       break;
   }
@@ -46,7 +50,7 @@ export default (state = initialState, action) => {
 export const cURL = url => dispatch => {
   dispatch({type: FETCHING_HTML});
   axios
-    .post('/api/curl', {url})
+    .post('http://localhost:3000/api/curl', {url})
     .then(({data}) => dispatch({type: RECEIVE_HTML, payload: data}))
     .catch(() => dispatch({type: NO_HTML_RETURNED}));
 };
@@ -58,3 +62,5 @@ export const cURL = url => dispatch => {
 export const updateTag = tag => dispatch => {
   dispatch({type: UPDATE_TAG, payload: tag});
 };
+
+export const resetState = () => dispatch => dispatch({type: RESET_STATE});
