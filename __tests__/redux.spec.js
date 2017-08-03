@@ -5,6 +5,7 @@ import expect from 'expect';
 const { dispatch, getState } = store;
 
 describe('methods', () => {
+  beforeEach(() => dispatch(resetState));
   describe('resetState', () => {
     it('resets the state to initialState', () => {
       dispatch(resetState());
@@ -15,16 +16,11 @@ describe('methods', () => {
   describe('cURL', () => {
     beforeEach(() => dispatch(resetState));
     it('fetched the url', () => {
-      dispatch(cURL('cognizant.com'));
-      expect(getState()).toEqual({tag: '', fetching: true, noneReceived: false})
-    });
-  });
-
-  describe('updateTag', () => {
-    beforeEach(() => dispatch(resetState));
-    it('updated the tag', () => {
-    dispatch(updateTag('DIV'));
-      expect(getState().tag).toEqual('DIV');
+      dispatch(cURL('cognizant.com'), () => {
+        expect(getState()).toEqual({tag: '', fetching: false, noneReceived: false});
+        dispatch(updateTag('DIV'));
+        expect(getState()).toEqual({tag: 'DIV', fetching: false, noneReceived: false});
+      })
     });
   });
 });

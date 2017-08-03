@@ -51,7 +51,10 @@ export const cURL = url => dispatch => {
   dispatch({type: FETCHING_HTML});
   axios
     .post('http://localhost:3000/api/curl', {url})
-    .then(({data}) => dispatch({type: RECEIVE_HTML, payload: data}))
+    .then(({data}) => {
+      dispatch({type: RECEIVE_HTML, payload: data});
+      return Promise.resolve();
+    })
     .catch(() => dispatch({type: NO_HTML_RETURNED}));
 };
 
